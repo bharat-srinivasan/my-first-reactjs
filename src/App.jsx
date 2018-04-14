@@ -27,9 +27,13 @@ class App extends Component {
     });
   }
 
+  nameChangedHandler = (event) => {
+    console.log(`Name changed: ${event.target.value}`);
+  }
+
   render() {
     let persons = this.state.persons.map(person => {
-      return <Person name={person.name} />
+      return <Person name={person.name} change={this.nameChangedHandler} />
     });
     return (
       <div className="App">
