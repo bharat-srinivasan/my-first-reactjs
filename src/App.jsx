@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
+import styles from './App.css';
 import Person from './Person/Person';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 // import Radium, { StyleRoot } from 'radium';
 
@@ -13,10 +14,6 @@ class App extends Component {
       { name: "Dileep", age: 29 }
     ]
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   switchNameHandler = () => {
     console.log("Switching!!");
@@ -49,29 +46,24 @@ class App extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: 'green',
-      color: 'white',
-      font: 'inherit',
-      padding: '8px',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
-    };
     let persons = this.state.persons.map((person, index) => {
-      return <Person key={person.name + index} name={person.name} changed={(event) => this.nameChangedHandler(index, event.target.value)} delete={() => this.deletePersonHandler(index)} />
+      return (
+        <ErrorBoundary>
+          <Person key={person.name + index}
+            name={person.name}
+            changed={(event) => this.nameChangedHandler(index, event.target.value)}
+            delete={() => this.deletePersonHandler(index)} />
+        </ErrorBoundary>);
     });
     return (
       // For media queries, you need to wrap root app with StyleRoot. Not required for pseudo selectors.
       // <StyleRoot>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+      <div className={styles.App}>
+        <header className={styles.AppHeader}>
+          <img src={logo} className={styles.AppLogo} alt="logo" />
+          <h1 className={styles["App-title"]}>Welcome to React</h1>
         </header>
-        <button style={style} onClick={this.switchNameHandler}>Switch</button>
+        <button onClick={this.switchNameHandler}>Switch</button>
         {persons}
       </div>
       // </StyleRoot>

@@ -1,18 +1,12 @@
 import React from 'react';
-import './Person.css';
+import styles from './Person.css';
 // import Radium from 'radium';
 
 const person = (props) => {
-  const style = {
-    '@media (min-width: 500px)': {
-      width: '450px'
-    }
-  };
-
   return (
-    <div className="Person" style={style}>
+    <div className={styles.Person}>
       <p>Hello, <input type="text" value={props.name} onChange={props.changed} /></p>
-      <button onClick={props.delete}>X</button>
+      <button onClick={props.delete} className={styles.Red}>x</button>
     </div>
   );
 };
