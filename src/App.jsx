@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import Person from './Person/Person';
 
+import Radium, { StyleRoot } from 'radium';
+
 class App extends Component {
 
   state = {
@@ -27,25 +29,54 @@ class App extends Component {
     });
   }
 
-  nameChangedHandler = (event) => {
-    console.log(`Name changed: ${event.target.value}`);
+  deletePersonHandler = (index) => {
+    const persons = this.state.persons.slice();
+    persons.splice(index, 1);
+    this.setState({
+      persons: persons
+    });
+  };
+
+  nameChangedHandler = (index, newValue) => {
+    console.log(`Name changed: ${newValue} - ${index}`);
+    const person = { ...this.state.persons[index] };
+    person.name = newValue;
+    const persons = [...this.state.persons];
+    persons[index] = person;
+    this.setState({
+      persons: persons
+    });
   }
 
   render() {
-    let persons = this.state.persons.map(person => {
-      return <Person name={person.name} change={this.nameChangedHandler} />
+    const style = {
+      backgroundColor: 'green',
+      color: 'white',
+      font: 'inherit',
+      padding: '8px',
+      cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen',
+        color: 'black'
+      }
+    };
+    let persons = this.state.persons.map((person, index) => {
+      return <Person key={person.name + index} name={person.name} changed={(event) => this.nameChangedHandler(index, event.target.value)} delete={() => this.deletePersonHandler(index)} />
     });
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <button onClick={this.switchNameHandler}>Switch</button>
-        {persons}
-      </div>
+      // For media queries, you need to wrap root app with StyleRoot. Not required for pseudo selectors.
+      <StyleRoot>
+        <div className="App">
+          <header className="App-header">
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1 className="App-title">Welcome to React</h1>
+          </header>
+          <button style={style} onClick={this.switchNameHandler}>Switch</button>
+          {persons}
+        </div>
+      </StyleRoot>
     );
   }
 }
 
-export default App;
+export default Radium(App);
