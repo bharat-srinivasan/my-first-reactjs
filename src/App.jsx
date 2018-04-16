@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Person from './Person/Person';
 
-import Radium, { StyleRoot } from 'radium';
+// import Radium, { StyleRoot } from 'radium';
 
 class App extends Component {
 
@@ -65,18 +65,19 @@ class App extends Component {
     });
     return (
       // For media queries, you need to wrap root app with StyleRoot. Not required for pseudo selectors.
-      <StyleRoot>
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <h1 className="App-title">Welcome to React</h1>
-          </header>
-          <button style={style} onClick={this.switchNameHandler}>Switch</button>
-          {persons}
-        </div>
-      </StyleRoot>
+      // <StyleRoot>
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Welcome to React</h1>
+        </header>
+        <button style={style} onClick={this.switchNameHandler}>Switch</button>
+        {persons}
+      </div>
+      // </StyleRoot>
     );
   }
 }
 
-export default Radium(App);
+// export default Radium(App);
+export default App;
