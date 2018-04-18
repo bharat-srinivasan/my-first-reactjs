@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import logo from '../assets/logo.svg';
 import styles from './App.css';
-import Person from '../components/Persons/Person/Person';
-import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
+import Cockpit from '../components/Cockpit/Cockpit';
 
 // import Radium, { StyleRoot } from 'radium';
 
@@ -46,25 +44,15 @@ class App extends Component {
   }
 
   render() {
-    let persons = this.state.persons.map((person, index) => {
-      return (
-        <ErrorBoundary>
-          <Person key={person.name + index}
-            name={person.name}
-            changed={(event) => this.nameChangedHandler(index, event.target.value)}
-            delete={() => this.deletePersonHandler(index)} />
-        </ErrorBoundary>);
-    });
     return (
       // For media queries, you need to wrap root app with StyleRoot. Not required for pseudo selectors.
       // <StyleRoot>
       <div className={styles.App}>
-        <header className={styles.AppHeader}>
-          <img src={logo} className={styles.AppLogo} alt="logo" />
-          <h1 className={styles["App-title"]}>Welcome to React</h1>
-        </header>
-        <button onClick={this.switchNameHandler}>Switch</button>
-        {persons}
+        <Cockpit
+          delete={this.deletePersonHandler}
+          changed={this.nameChangedHandler}
+          persons={this.state.persons}
+          toggle={this.switchNameHandler}></Cockpit>
       </div>
       // </StyleRoot>
     );

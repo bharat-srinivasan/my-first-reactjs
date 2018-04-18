@@ -1,8 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Person from './Person/Person';
+import ErrorBoundary from '../ErrorBoundary/ErrorBoundary';
 
-export default class Persons extends Component {
+const persons = (props) => {
+  return props.persons.map((person, index) => {
+    return (
+      <ErrorBoundary>
+        <Person key={person.name + index}
+          name={person.name}
+          changed={(event) => props.changed(index, event.target.value)}
+          delete={() => props.delete(index)} />
+      </ErrorBoundary>);
+  });
+};
 
-  render() {
-    return (<div></div>);
-  }
-}
+export default persons;
